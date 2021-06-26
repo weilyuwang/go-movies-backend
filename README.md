@@ -1,7 +1,11 @@
 ### Start the application
 
 ```
-go run cmd/api/*go
+go run cmd/api/*.go
+
+or
+
+go run ./cmd/api
 ```
 
 ### Postgres with Docker
