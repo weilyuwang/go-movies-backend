@@ -11,6 +11,10 @@ import (
 	"os"
 	"time"
 
+	// To import a package solely for its side-effects (initialization),
+	// use the blank identifier as explicit package name.
+	// the underscore import is used for the side-effect of registering the postgresql driver
+	// as a database driver in the init() function, without importing any other functions:
 	_ "github.com/lib/pq"
 )
 
