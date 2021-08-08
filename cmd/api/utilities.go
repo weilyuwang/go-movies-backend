@@ -1,8 +1,13 @@
 package main
 
 import (
+	"crypto/hmac"
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"net/http"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 func (app *application) writeJSON(w http.ResponseWriter, status int, data interface{}, wrap string) error {
@@ -32,4 +37,29 @@ func (app *application) errorJSON(w http.ResponseWriter, err error) {
 	}
 
 	app.writeJSON(w, http.StatusBadRequest, theError, "error")
+}
+
+func generateHashedPassword() string {
+	password := "password"
+
+	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(password), 12)
+
+	return string(hashedPassword)
+}
+
+func generateJwtSecret() string {
+
+	secret := "mysecret"
+	data := "data"
+
+	// Create a new HMAC by defining the hash type and the key (as byte array)
+	h := hmac.New(sha256.New, []byte(secret))
+
+	// Write Data to it
+	h.Write([]byte(data))
+
+	// Get result and encode as hexadecimal string
+	sha := hex.EncodeToString(h.Sum(nil))
+
+	return sha
 }
