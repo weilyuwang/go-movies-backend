@@ -36,6 +36,7 @@ func (app *application) errorJSON(w http.ResponseWriter, err error) {
 		Message: err.Error(),
 	}
 
+	// Status Code 400 (Bad Request if Error)
 	app.writeJSON(w, http.StatusBadRequest, theError, "error")
 }
 
