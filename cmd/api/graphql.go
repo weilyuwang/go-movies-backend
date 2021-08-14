@@ -6,8 +6,8 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
+	"strings"
 
 	"github.com/graphql-go/graphql"
 )
@@ -24,8 +24,8 @@ var fields = graphql.Fields{
 				Type: graphql.Int,
 			},
 		},
-		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-			id, ok := p.Args["id"].(int)
+		Resolve: func(params graphql.ResolveParams) (interface{}, error) {
+			id, ok := params.Args["id"].(int)
 			if ok {
 				for _, movie := range movies {
 					if movie.ID == id {
@@ -39,8 +39,29 @@ var fields = graphql.Fields{
 	"list": &graphql.Field{
 		Type:        graphql.NewList(movieType),
 		Description: "Get all movies",
-		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+		Resolve: func(params graphql.ResolveParams) (interface{}, error) {
 			return movies, nil
+		},
+	},
+	"search": &graphql.Field{
+		Type:        graphql.NewList(movieType),
+		Description: "Search movies by title",
+		Args: graphql.FieldConfigArgument{
+			"titleContains": &graphql.ArgumentConfig{
+				Type: graphql.String,
+			},
+		},
+		Resolve: func(params graphql.ResolveParams) (interface{}, error) {
+			var theList []*models.Movie
+			search, ok := params.Args["titleContains"].(string)
+			if ok {
+				for _, currentMovie := range movies {
+					if strings.Contains(strings.ToLower(currentMovie.Title), strings.ToLower(search)) {
+						theList = append(theList, currentMovie)
+					}
+				}
+			}
+			return theList, nil
 		},
 	},
 }
@@ -89,14 +110,11 @@ func (app *application) moviesGraphQL(w http.ResponseWriter, r *http.Request) {
 	q, _ := io.ReadAll(r.Body)
 	query := string(q)
 
-	log.Println(query)
-
 	rootQuery := graphql.ObjectConfig{Name: "RootQuery", Fields: fields}
 	schemaConfig := graphql.SchemaConfig{Query: graphql.NewObject(rootQuery)}
 	schema, err := graphql.NewSchema(schemaConfig)
 	if err != nil {
 		app.errorJSON(w, errors.New("failed to create schema"))
-		log.Println(err)
 		return
 	}
 
