@@ -1,10 +1,7 @@
 ### Start the backend server
 
 ```
-go run cmd/api/*.go
-
-or
-
+export GO_MOVIES_JWT='[YOUR_JWT_SECRET]'
 go run ./cmd/api
 ```
 
