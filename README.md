@@ -11,7 +11,7 @@ go run ./cmd/api
 
 - Before running the server, make sure the postgres is running
 
-#### SQL dump
+#### populate the databse with existing SQL dump file
 
 - create a database named `go_movies`, then in the project root directory, run:
 
