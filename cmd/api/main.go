@@ -53,6 +53,14 @@ func main() {
 	// flag.StringVar(&cfg.jwt.secret, "jwt-secret", generateJwtSecret(), "secret")
 	flag.Parse()
 
+	// go run ./cmd/api -h                                                                                      ─╯
+	// -dsn string
+	//       postgres connection string (default "postgres://postgres:postgres@localhost/go_movies?sslmode=disable")
+	// -env string
+	//       Applicaton environment (development|production) (default "development")
+	// -port int
+	//       Server port to listen on (default 4000)
+
 	// read JWT secret from env
 	cfg.jwt.secret = os.Getenv("GO_MOVIES_JWT")
 

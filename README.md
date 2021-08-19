@@ -18,3 +18,17 @@ go run ./cmd/api
 ```
 psql -d go_movies -f sql_dump/go_movies.sql
 ```
+
+### Production Build
+
+- To generate a single binary executable go application:
+
+```
+env GOOS=linux GOARCH=amd64 go build -o gomovies ./cmd/api
+```
+
+### Dump the existing database
+
+```
+pg_dump  --no-owner go_movies > go_movies.sql
+```
