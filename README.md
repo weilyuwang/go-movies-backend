@@ -16,7 +16,11 @@ go run ./cmd/api
 - create a database named `go_movies`, then in the project root directory, run:
 
 ```
-psql -d go_movies -f sql_dump/go_movies.sql
+psql -d go_movies -f [*.sql](sql_dump/go_movies.sql)
+
+or
+
+sudo -u postgres psql -d go_movies -f [*.sql]
 ```
 
 ### Production Build
