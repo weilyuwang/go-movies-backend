@@ -1,8 +1,8 @@
-### Start the backend server
+### Start the backend development server
 
 ```
 export GO_MOVIES_JWT='[YOUR_JWT_SECRET]'
-go run ./cmd/api
+go run main.go
 ```
 
 ### Postgres DB
@@ -16,11 +16,11 @@ go run ./cmd/api
 - create a database named `go_movies`, then in the project root directory, run:
 
 ```
-psql -d go_movies -f [*.sql](sql_dump/go_movies.sql)
+psql -d go_movies -f go_movies.sql
 
 or
 
-sudo -u postgres psql -d go_movies -f [*.sql]
+sudo -u postgres psql -d go_movies -f go_movies.sql
 ```
 
 ### Production Build
@@ -28,7 +28,13 @@ sudo -u postgres psql -d go_movies -f [*.sql]
 - To generate a single binary executable go application:
 
 ```
-env GOOS=linux GOARCH=amd64 go build -o gomovies ./cmd/api
+go build -o gomovies main.go
+```
+
+- For linux remote server:
+
+```
+env GOOS=linux GOARCH=amd64 go build -o gomovies main.go
 ```
 
 ### Dump the existing database

@@ -1,4 +1,4 @@
-package main
+package api
 
 import (
 	"backend/models"
@@ -44,7 +44,7 @@ type application struct {
 	models models.Models
 }
 
-func main() {
+func RunServer() {
 	var cfg config
 
 	flag.IntVar(&cfg.port, "port", 4000, "Server port to listen on")
