@@ -69,7 +69,6 @@ func RunServer() {
 
 	db, err := openDB(cfg)
 	if err != nil {
-		logger.Println("Postgres cannot be connected")
 		logger.Fatal(err)
 	}
 	logger.Println("Connected to DB")
