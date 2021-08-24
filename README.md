@@ -41,11 +41,9 @@ pg_dump --no-owner go_movies > db_migration/go_movies.sql
 
 ### Docker
 
-Start the containers: `docker-compose up -d`
+Rebuild and start: `docker-compose up --build`
 
-Rebuild and start: `docker-compose up -d --build`
-
-Login: `docker exec -it postgres psql -U postgres -d postgres go-movies`
+Login: `docker exec -it postgres psql -U postgres`
 
 Show tables: `\dt`
 
@@ -55,4 +53,4 @@ backup database: `docker exec -t your-db-container pg_dumpall -c -U postgres > d
 
 restore database from sql dump: `cat your_dump.sql | docker exec -i your-db-container psql -U postgres`
 
-e.g. `cat db_migration/go_movies.sql | docker exec -i postgres psql -U postgres -d postgres go-movies`
+e.g. `cat db_migration/go_movies.sql | docker exec -i postgres psql -U postgres -d go_movies` (use -d to specify DB name)

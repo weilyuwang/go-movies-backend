@@ -49,9 +49,9 @@ func RunServer() {
 
 	flag.IntVar(&cfg.port, "port", 4000, "Server port to listen on")
 	flag.StringVar(&cfg.env, "env", "development", "Applicaton environment (development|production)")
+	// If use locally-installed postgres server, set host to localhost
 	flag.StringVar(&cfg.db.dsn, "dsn", fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
-		"postgres", 5432, "postgres", "postgres", "go-movies"), "postgres connection string")
-	// flag.StringVar(&cfg.jwt.secret, "jwt-secret", generateJwtSecret(), "secret")
+		"postgres", 5432, "postgres", "postgres", "go_movies"), "postgres connection string")
 	flag.Parse()
 
 	// go run main.go -h                                                                                      ─╯
@@ -66,6 +66,10 @@ func RunServer() {
 	cfg.jwt.secret = os.Getenv("GO_MOVIES_JWT")
 
 	logger := log.New(os.Stdout, "", log.Ldate|log.Ltime)
+
+	if cfg.jwt.secret == "" {
+		logger.Fatal("No JWT Secret specified")
+	}
 
 	db, err := openDB(cfg)
 	if err != nil {

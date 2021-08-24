@@ -3,11 +3,12 @@ version: "3.9"
 services:
   postgres:
     image: postgres
+    restart: always
     container_name: postgres
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: go-movies
+      POSTGRES_DB: go_movies
     ports:
       - "5432:5432"
     volumes:
@@ -16,6 +17,8 @@ services:
   backend:
     container_name: go-movies-backend
     build: .
+    environment:
+      GO_MOVIES_JWT: 2dce505d96a53c5768052ee90f3df2055657518dad489160df9913f66042e160
     ports:
       - "4000:4000"
     depends_on:
