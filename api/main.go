@@ -49,7 +49,8 @@ func RunServer() {
 
 	flag.IntVar(&cfg.port, "port", 4000, "Server port to listen on")
 	flag.StringVar(&cfg.env, "env", "development", "Applicaton environment (development|production)")
-	flag.StringVar(&cfg.db.dsn, "dsn", "postgres://postgres:postgres@localhost/go_movies?sslmode=disable", "postgres connection string")
+	flag.StringVar(&cfg.db.dsn, "dsn", fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
+		"postgres", 5432, "postgres", "postgres", "go-movies"), "postgres connection string")
 	// flag.StringVar(&cfg.jwt.secret, "jwt-secret", generateJwtSecret(), "secret")
 	flag.Parse()
 
@@ -68,7 +69,7 @@ func RunServer() {
 
 	db, err := openDB(cfg)
 	if err != nil {
-		logger.Println("PostgresDB cannot be connected")
+		logger.Println("Postgres cannot be connected")
 		logger.Fatal(err)
 	}
 	logger.Println("Connected to DB")

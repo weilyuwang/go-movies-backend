@@ -36,21 +36,23 @@ env GOOS=linux GOARCH=amd64 go build -o gomovies main.go
 ### Dump the existing database
 
 ```
-pg_dump  --no-owner go_movies > db_migration/go_movies.sql
+pg_dump --no-owner go_movies > db_migration/go_movies.sql
 ```
 
 ### Docker
 
-#### Build the docker image from Dockerfile
+Start the containers: `docker-compose up -d`
 
-```
-docker build -t go-movies-backend .
-```
+Rebuild and start: `docker-compose up -d --build`
 
-#### Run the docker container
+Login: `docker exec -it postgres psql -U postgres -d postgres go-movies`
 
-```
-docker run -d -p 4000:4000 go-movies-backend
+Show tables: `\dt`
 
-docker run -p 4000:4000 -it go-movies-backend /bin/bash
-```
+Show databases: `\l`
+
+backup database: `docker exec -t your-db-container pg_dumpall -c -U postgres > dump.sql`
+
+restore database from sql dump: `cat your_dump.sql | docker exec -i your-db-container psql -U postgres`
+
+e.g. `cat db_migration/go_movies.sql | docker exec -i postgres psql -U postgres -d postgres go-movies`

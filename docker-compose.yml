@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: go-movies
+    ports:
+      - "5432:5432"
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+
+  backend:
+    container_name: go-movies-backend
+    build: .
+    ports:
+      - "4000:4000"
+    depends_on:
+      - "postgres"
+
+volumes:
+  dbdata:

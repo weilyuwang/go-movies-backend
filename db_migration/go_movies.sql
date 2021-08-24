@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.3
--- Dumped by pg_dump version 12.3
+-- Dumped from database version 13.2
+-- Dumped by pg_dump version 13.2
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -66,7 +66,8 @@ CREATE TABLE public.movies (
     rating integer,
     mpaa_rating character varying,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    poster character varying
 );
 
 
@@ -165,11 +166,12 @@ COPY public.genres (id, genre_name, created_at, updated_at) FROM stdin;
 -- Data for Name: movies; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.movies (id, title, description, year, release_date, runtime, rating, mpaa_rating, created_at, updated_at) FROM stdin;
-1	The Shawshank Redemption	Two imprisoned men bond over a number of years	1994	1994-10-14	142	5	R	2021-05-17 00:00:00	2021-05-17 00:00:00
-2	The Godfather	The aging patriarch of an organized crime dynasty transfers control to his son	1972	1972-03-24	175	5	R	2021-05-17 00:00:00	2021-05-17 00:00:00
-4	American Psycho	 A wealthy New York investment banking executive hides his alternate psychopathic ego	2000	2000-04-14	102	4	R	2021-05-17 00:00:00	2021-05-17 00:00:00
-3	The Dark Knight	The menace known as the Joker wreaks havoc on Gotham City	2008	2008-07-18	152	5	PG13	2021-05-17 00:00:00	2021-05-17 00:00:00
+COPY public.movies (id, title, description, year, release_date, runtime, rating, mpaa_rating, created_at, updated_at, poster) FROM stdin;
+5	The Princess Bride	While home sick in bed, a young boy's grandfather reads him the story of a farmboy-turned-pirate who encounters numerous obstacles, enemies and allies in his quest to be reunited with his true love.	1987	1987-10-09	98	5	PG	2021-07-29 00:16:15.252126	2021-08-17 11:47:31.586406	/dvjqlp2sAhUeFjUOfQDgqwpphHj.jpg
+2	The Godfather	The aging patriarch of an organized crime dynasty transfers control to his son.	1972	1972-03-24	175	5	R	2021-05-17 00:00:00	2021-08-17 11:51:28.73655	/3bhkrj58Vtu7enYsRolD1fZdja1.jpg
+4	American Psycho	 A wealthy New York investment banking executive hides his alternate psychopathic ego.	2000	2000-04-14	102	4	R	2021-05-17 00:00:00	2021-08-17 21:55:54.795497	/3ddHhfMlZHZCefHDeaP8FzSoH4Y.jpg
+3	The Dark Knight	The menace known as the Joker wreaks havoc on Gotham City	2008	2008-07-18	152	5	PG13	2021-05-17 00:00:00	2021-08-17 21:55:57.286356	/qJ2tW6WMUDux911r6m7haRef0WH.jpg
+1	The Shawshank Redemption	Two imprisoned men bond over a number of years.	1994	1994-10-14	142	5	R	2021-05-17 00:00:00	2021-08-17 21:56:03.753257	/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg
 \.
 
 
@@ -178,6 +180,8 @@ COPY public.movies (id, title, description, year, release_date, runtime, rating,
 --
 
 COPY public.movies_genres (id, movie_id, genre_id, created_at, updated_at) FROM stdin;
+1	1	1	2021-06-25 00:00:00	2021-06-25 00:00:00
+2	1	2	2021-06-25 00:00:00	2021-06-25 00:00:00
 \.
 
 
@@ -192,14 +196,14 @@ SELECT pg_catalog.setval('public.genres_id_seq', 9, true);
 -- Name: movies_genres_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.movies_genres_id_seq', 1, false);
+SELECT pg_catalog.setval('public.movies_genres_id_seq', 2, true);
 
 
 --
 -- Name: movies_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.movies_id_seq', 4, true);
+SELECT pg_catalog.setval('public.movies_id_seq', 7, true);
 
 
 --
