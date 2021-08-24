@@ -53,7 +53,7 @@ func RunServer() {
 	// flag.StringVar(&cfg.jwt.secret, "jwt-secret", generateJwtSecret(), "secret")
 	flag.Parse()
 
-	// go run ./cmd/api -h                                                                                      ─╯
+	// go run main.go -h                                                                                      ─╯
 	// -dsn string
 	//       postgres connection string (default "postgres://postgres:postgres@localhost/go_movies?sslmode=disable")
 	// -env string
@@ -68,6 +68,7 @@ func RunServer() {
 
 	db, err := openDB(cfg)
 	if err != nil {
+		logger.Println("PostgresDB cannot be connected")
 		logger.Fatal(err)
 	}
 	logger.Println("Connected to DB")

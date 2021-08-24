@@ -16,11 +16,7 @@ go run main.go
 - create a database named `go_movies`, then in the project root directory, run:
 
 ```
-psql -d go_movies -f go_movies.sql
-
-or
-
-sudo -u postgres psql -d go_movies -f go_movies.sql
+(sudo -u postgres) psql -d go_movies -f db_migration/go_movies.sql
 ```
 
 ### Production Build
@@ -40,5 +36,21 @@ env GOOS=linux GOARCH=amd64 go build -o gomovies main.go
 ### Dump the existing database
 
 ```
-pg_dump  --no-owner go_movies > go_movies.sql
+pg_dump  --no-owner go_movies > db_migration/go_movies.sql
+```
+
+### Docker
+
+#### Build the docker image from Dockerfile
+
+```
+docker build -t go-movies-backend .
+```
+
+#### Run the docker container
+
+```
+docker run -d -p 4000:4000 go-movies-backend
+
+docker run -p 4000:4000 -it go-movies-backend /bin/bash
 ```
